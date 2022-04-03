@@ -1,4 +1,4 @@
-class AddNotNullToFoodEnquetes < ActiveRecord::Migration[5.2]
+class AddNotNullToFoodEnquetes < ActiveRecord::Migration[7.0]
   def up
     change_column_null :food_enquetes, :name, false
     change_column_null :food_enquetes, :mail, false
