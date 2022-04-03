@@ -1,5 +1,5 @@
 class GymEnquetesController < ApplicationController
-  before_action :set_gym_enquete, only: %i[ show edit update destroy ]
+  before_action :set_gym_enquete, only: [:show, :edit, :update, :destroy]
 
   # GET /gym_enquetes
   def index
@@ -24,25 +24,25 @@ class GymEnquetesController < ApplicationController
     @gym_enquete = GymEnquete.new(gym_enquete_params)
 
     if @gym_enquete.save
-      redirect_to @gym_enquete, notice: "Gym enquete was successfully created."
+      redirect_to @gym_enquete, notice: I18n.t('successes.submit', name: @gym_enquete.model_name.human)
     else
-      render :new, status: :unprocessable_entity
+      render :new
     end
   end
 
   # PATCH/PUT /gym_enquetes/1
   def update
     if @gym_enquete.update(gym_enquete_params)
-      redirect_to @gym_enquete, notice: "Gym enquete was successfully updated."
+      redirect_to @gym_enquete, notice: I18n.t('successes.update', name: @gym_enquete.model_name.human)
     else
-      render :edit, status: :unprocessable_entity
+      render :edit
     end
   end
 
   # DELETE /gym_enquetes/1
   def destroy
     @gym_enquete.destroy
-    redirect_to gym_enquetes_url, notice: "Gym enquete was successfully destroyed."
+    redirect_to gym_enquetes_url, notice: I18n.t('successes.destroy', name: @gym_enquete.model_name.human)
   end
 
   private
@@ -51,7 +51,7 @@ class GymEnquetesController < ApplicationController
       @gym_enquete = GymEnquete.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
+    # Only allow a trusted parameter "white list" through.
     def gym_enquete_params
       params.require(:gym_enquete).permit(:name, :mail, :age, :course_id, :score, :request, :present_id)
     end

@@ -1,5 +1,5 @@
 class FoodEnquetesController < ApplicationController
-  before_action :set_food_enquete, only: %i[ show edit update destroy ]
+  before_action :set_food_enquete, only: [:show, :edit, :update, :destroy]
 
   # GET /food_enquetes
   def index
@@ -24,25 +24,25 @@ class FoodEnquetesController < ApplicationController
     @food_enquete = FoodEnquete.new(food_enquete_params)
 
     if @food_enquete.save
-      redirect_to @food_enquete, notice: "Food enquete was successfully created."
+      redirect_to @food_enquete, notice: I18n.t('successes.submit', name: @food_enquete.model_name.human)
     else
-      render :new, status: :unprocessable_entity
+      render :new
     end
   end
 
   # PATCH/PUT /food_enquetes/1
   def update
     if @food_enquete.update(food_enquete_params)
-      redirect_to @food_enquete, notice: "Food enquete was successfully updated."
+      redirect_to @food_enquete, notice: I18n.t('successes.update', name: @food_enquete.model_name.human)
     else
-      render :edit, status: :unprocessable_entity
+      render :edit
     end
   end
 
   # DELETE /food_enquetes/1
   def destroy
     @food_enquete.destroy
-    redirect_to food_enquetes_url, notice: "Food enquete was successfully destroyed."
+    redirect_to food_enquetes_url, notice: I18n.t('successes.destroy', name: @food_enquete.model_name.human)
   end
 
   private
@@ -51,7 +51,7 @@ class FoodEnquetesController < ApplicationController
       @food_enquete = FoodEnquete.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
+    # Only allow a trusted parameter "white list" through.
     def food_enquete_params
       params.require(:food_enquete).permit(:name, :mail, :age, :food_id, :score, :request, :present_id)
     end
