@@ -22,11 +22,10 @@ class FoodEnquetesController < ApplicationController
   # POST /food_enquetes
   def create
     @food_enquete = FoodEnquete.new(food_enquete_params)
-
     if @food_enquete.save
       redirect_to @food_enquete, notice: I18n.t('successes.submit', name: @food_enquete.model_name.human)
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

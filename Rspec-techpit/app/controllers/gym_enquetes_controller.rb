@@ -26,7 +26,7 @@ class GymEnquetesController < ApplicationController
     if @gym_enquete.save
       redirect_to @gym_enquete, notice: I18n.t('successes.submit', name: @gym_enquete.model_name.human)
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
